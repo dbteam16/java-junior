@@ -1,29 +1,48 @@
 package com.acme.edu;
 
-import java.io.OutputStream;
-
 public class Logger {
 
+    private static void print(String decoratedMessage) {System.out.println(decoratedMessage);}
 
+    private static int accumulated = 0;
+    private static String prevMethod = null;
+    
     public static void log(String message) {
-        System.out.println("string: " + message);
+        String decoratedMessage = "" + message;
+
+        flush();
+        print(decoratedMessage);
+        prevMethod = "logString";
     }
 
     public static void log(int message) {
-        System.out.println("primitive: " + message);
+        accumulated += message;
+        prevMethod = "logInt";
     }
 
     public static void log(boolean b) {
-        System.out.println("primitive: " + b);
+        flush();
+        print("" + b);
+        prevMethod = "logBoolean";
     }
 
     public static void log(char c) {
-        System.out.println("char: " + c);
+        flush();
+        print("char: " + c);
+        prevMethod = "logChar";
     }
 
     public static void log(Object o) {
-        System.out.println("reference: " + o);
+        flush();
+        print("reference: " + o);
+        prevMethod = "logObject";
     }
 
-
+    public static void flush() {
+        if ("logInt".equals(prevMethod)) {
+            print("" + accumulated);
+            accumulated = 0;
+        }
+        prevMethod = "flush";
+    }
 }
