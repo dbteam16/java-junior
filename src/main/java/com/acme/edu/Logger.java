@@ -34,20 +34,23 @@ public class Logger {
         prevMethod = "logString";
     }
 
-    public static void log(int message) {
-        if (!"logInt".equals(prevMethod)) {
-            flush();
-        }
-        // test for overflow
-
-        long test = (long)accumulated + (long)message;
-        if ( test > Integer.MAX_VALUE ) {
+    // test for overflow
+    private static void increaseAccWithRangeCheck(int message, long maxValue) {
+        long test = (long) accumulated + (long) message;
+        if (test > maxValue) {
             flush();
             accumulated = message;
         } else {
             accumulated += message;
         }
+    }
 
+    public static void log(int message) {
+        if (!"logInt".equals(prevMethod)) {
+            flush();
+        }
+
+        increaseAccWithRangeCheck(message, Integer.MAX_VALUE);
         prevMethod = "logInt";
     }
 
@@ -55,15 +58,8 @@ public class Logger {
         if (!"logInt".equals(prevMethod)) {
             flush();
         }
-        // test for overflow
-        long test = (long)accumulated + (long)message;
-        if ( test > Byte.MAX_VALUE ) {
-            flush();
-            accumulated = message;
-        } else {
-            accumulated += message;
-        }
 
+        increaseAccWithRangeCheck(message, Byte.MAX_VALUE);
         prevMethod = "logInt";
     }
 
