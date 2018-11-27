@@ -141,7 +141,7 @@ public class Logger {
             if (strCnt > 1)
                 s += " (x" + strCnt + ")";
 
-            print (s);
+            print("string: " + s);
             strCache = null;
             strCnt = 0;
         }
