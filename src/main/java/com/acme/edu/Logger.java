@@ -129,7 +129,7 @@ public class Logger {
     // expected to be called from flush() only
     private static void flushInt() {
         if ("logInt".equals(prevMethod)) {
-            print("" + accumulated);
+            print("primitive: " + accumulated);
             accumulated = 0;
         }
     }
