@@ -35,7 +35,7 @@ public class Logger {
     }
 
     public static void log(int message) {
-        if (!"logInt".equals(message)) {
+        if (!"logInt".equals(prevMethod)) {
             flush();
         }
         // test for overflow
@@ -52,7 +52,7 @@ public class Logger {
     }
 
     public static void log(byte message) {
-        if (!"logInt".equals(message)) {
+        if (!"logInt".equals(prevMethod)) {
             flush();
         }
         // test for overflow
