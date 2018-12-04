@@ -13,11 +13,10 @@ public class Logger {
     private static int strCnt = 0;
     
     public static void log(String message) {
-        if (!"logString".equals(prevMethod)) {
+        if (!"logString".equals(prevMethod))
             flush();
-        }
 
-        // previous wans't string - just store it
+        // previous wans't string - store message
         if (!"logString".equals(prevMethod)) {
             strCache = message;
             strCnt = 1;
@@ -34,7 +33,7 @@ public class Logger {
         prevMethod = "logString";
     }
 
-    // test for overflow
+    // test for overflow when log called for integer
     private static void increaseAccWithRangeCheck(int message, long maxValue) {
         long test = (long) accumulated + (long) message;
         if (test > maxValue) {
@@ -46,27 +45,24 @@ public class Logger {
     }
 
     public static void log(int message) {
-        if (!"logInt".equals(prevMethod)) {
+        if (!"logInt".equals(prevMethod))
             flush();
-        }
 
         increaseAccWithRangeCheck(message, Integer.MAX_VALUE);
         prevMethod = "logInt";
     }
 
     public static void log(byte message) {
-        if (!"logInt".equals(prevMethod)) {
+        if (!"logInt".equals(prevMethod))
             flush();
-        }
 
         increaseAccWithRangeCheck(message, Byte.MAX_VALUE);
         prevMethod = "logInt";
     }
 
-
     public static void log(boolean b) {
         flush();
-        print("" + b);
+        print("primitive: " + b);
         prevMethod = "logBoolean";
     }
 
@@ -75,7 +71,6 @@ public class Logger {
         print("char: " + c);
         prevMethod = "logChar";
     }
-
 
     private static String convertIntArrayToString(int [] arr) {
         String res = "{";
@@ -109,6 +104,7 @@ public class Logger {
         print("}");
         prevMethod = "logIntegersArray";
     }
+
 
     public static void log(Object o) {
         flush();
